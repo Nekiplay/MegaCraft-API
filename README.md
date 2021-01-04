@@ -2,7 +2,7 @@
 
 ## API for minecraft server: mc.megacraft.org
 
-**Using:**
+**Using user statistic:**
 ```C#
 MegaCraft.API.User user = new MegaCraft.API.User(Nickname: "Neki_play1", CheckLicense: true);
 if (user.Valid)
