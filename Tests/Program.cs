@@ -11,7 +11,7 @@ namespace Tests
     {
         static void Main(string[] args)
         {
-            MegaCraft.API.User user = new MegaCraft.API.User("madde22", true);
+            MegaCraft.API.User user = new MegaCraft.API.User("Neki_play1", true);
             if (user.Valid)
             {
                 if (user.License.Lisence)
