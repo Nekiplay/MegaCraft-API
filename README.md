@@ -4,7 +4,7 @@
 
 **Using:**
 ```C#
-MegaCraft.API.User user = new MegaCraft.API.User("nickname", true);
+MegaCraft.API.User user = new MegaCraft.API.User("nickname", CheckLicense: true);
 if (user.Valid)
 {
   if (user.License.Lisence)
