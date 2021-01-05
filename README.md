@@ -1,5 +1,7 @@
 # MegaCraft-API
 
+[Nuget](https://www.nuget.org/packages/MegaAPILibrary)
+
 ## API for minecraft server: mc.megacraft.org
 
 **Using user statistic:**
