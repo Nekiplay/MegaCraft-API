@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>Nekiplay</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Nekiplay/LordsMobileAPI</projectUrl>
+    <iconUrl>http://megacraft.org/img/megalogozip.png</iconUrl>
+    <description>API for LordsMobile Steam</description>
+    <releaseNotes>For minecraft server</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>C# Minecraft MegaCraft</tags>
+  </metadata>
+</package>

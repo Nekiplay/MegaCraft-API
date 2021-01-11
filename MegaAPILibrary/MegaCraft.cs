@@ -125,7 +125,6 @@ namespace MegaAPILibrary
         {
             public class User
             {
-
                 public class _Mtime_
                 {
                     public int Days;
@@ -280,7 +279,8 @@ namespace MegaAPILibrary
                             System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                             dtDateTime = dtDateTime.AddSeconds(int.Parse(lastlogin)).ToLocalTime();
                             DateTime moscowTime = TimeZoneInfo.ConvertTime(dtDateTime, moscowZone);
-                            TimeSpan interval = localmoscowTime - moscowTime;
+                            TimeSpan interval = localmoscowTime.AddSeconds(38) - moscowTime;
+
 
                             this.Lastlogin = new _Lastlogin_(interval.Days, interval.Hours, interval.Minutes, interval.Seconds);
                             this.Lastserver = Regex.Match(Response, "\"lastserver\": \"(.*)\",").Groups[1].Value;
