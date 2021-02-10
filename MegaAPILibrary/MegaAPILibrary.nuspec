@@ -2,15 +2,15 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <title>$title$</title>
     <authors>Nekiplay</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/Nekiplay/LordsMobileAPI</projectUrl>
+    <projectUrl>https://github.com/Nekiplay/MegaCraft-API</projectUrl>
     <iconUrl>http://megacraft.org/img/megalogozip.png</iconUrl>
-    <description>API for LordsMobile Steam</description>
-    <releaseNotes>For minecraft server</releaseNotes>
+    <description>API for Minecraft Server MegaCraft</description>
+    <releaseNotes>API bug Fix and new Features</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>C# Minecraft MegaCraft</tags>
   </metadata>

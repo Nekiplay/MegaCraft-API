@@ -423,18 +423,21 @@ namespace MegaAPILibrary
                                 string Response2 = wc2.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + Realname);
                                 string uuid = Regex.Match(Response2, "\"id\":\"(.*)\"}").Groups[1].Value;
                                 if (!string.IsNullOrEmpty(uuid))
+                                {
                                     this.License = new _License_
                                     {
                                         Lisence = true,
                                         UUID = uuid,
                                     };
+                                }
                                 else
-                                    if (!string.IsNullOrEmpty(uuid))
+                                {
                                     this.License = new _License_
                                     {
                                         Lisence = false,
                                         UUID = uuid,
                                     };
+                                }
                             }
                         }
                     }
