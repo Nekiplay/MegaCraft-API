@@ -226,6 +226,7 @@ namespace MegaAPILibrary
 
                 public string Prefix;
                 public string Donate;
+                public double Multiplier;
 
                 public _Clan_ Clan;
 
@@ -234,7 +235,61 @@ namespace MegaAPILibrary
                 public _Ban_ Ban;
 
                 public _License_ License;
-
+                public double GetMultiDonate(string donete)
+                {
+                    if (donete == "&e► &4&lＯＰ&e ◄ &4&l")
+                        return 100;
+                    else if (donete == "&e『&4&lＳｐｏｎｓｏｒ&e』&4&l")
+                        return 50;
+                    else if (donete == "&e&l『&4&lГлава сервера&e&l』&4&l")
+                        return 30;
+                    else if (donete == "&e&l『&4&lПрезидент сервера&e&l』&4&l")
+                        return 26;
+                    else if (donete == "&e&l『&4&lВладелец сервера&e&l』&4&l")
+                        return 24;
+                    else if (donete == "&e『&4&lСоВладелец&e』&4&l")
+                        return 22;
+                    else if (donete == "&e『&4&lОснователь сервера&e』&4&l")
+                        return 20;
+                    else if (donete == "&e『&4&lГл. Администратор&e』&4&l")
+                        return 18;
+                    else if (donete == "&e『&4&lСт. Администратор&e』&4&l")
+                        return 16;
+                    else if (donete == "&e『&4&lАдминистратор&e』&4&l")
+                        return 14;
+                    else if (donete == "&e『&4&lС&c&lМодер&e』&4&l")
+                        return 12;
+                    else if (donete == "&e『&4&lБОЛЬШОЙ БОСС&e』&4&l")
+                        return 10;
+                    else if (donete == "&c『&4&l&nБОГ&c』&4&l")
+                        return 8;
+                    else if (donete == "&8[&6Игрок&8] &7")
+                        return 7;
+                    else if (donete == "&c『&2&lВладелец&c』&4&l")
+                        return 6.5;
+                    else if (donete == "&c『&4&lОснователь&c』&4&l")
+                        return 6;
+                    else if (donete == "&6『&e&lСоздатель&6』&2&l")
+                        return 5.5;
+                    else if (donete == "&6『&d&lОператор&6』&d&l")
+                        return 5;
+                    else if (donete == "&6『&c&lГл. Админ&6』&c&l")
+                        return 4.5;
+                    else if (donete == "&d『&5Лорд&d』&5")
+                        return 4;
+                    else if (donete == "&e『&cАдмин&e』&c")
+                        return 3.5;
+                    else if (donete == "&e『&3Модер&e』&3")
+                        return 3;
+                    else if (donete == "&e『&bКреатив&e』&b")
+                        return 2.5;
+                    else if (donete == "&e『&dПремиум&e』&d")
+                        return 2;
+                    else if (donete == "&e『&aВип&e』&2")
+                        return 1.5;
+                    else
+                        return 0;
+                }
 
                 public User(string Nickname, bool CheckLicense)
                 {
@@ -293,7 +348,7 @@ namespace MegaAPILibrary
 
                             this.Prefix = Regex.Match(Response, "\"prefix\": \"(.*)\",").Groups[1].Value.Replace(@"\/", "/");
                             this.Donate = Regex.Match(Response, "\"groupprefix\": \"(.*)\",").Groups[1].Value;
-
+                            this.Multiplier = GetMultiDonate(Donate);
                             bool immunone = bool.Parse(Regex.Match(Response, "\"immun\": (.*),").Groups[1].Value);
                             bool immuntwo = bool.Parse(Regex.Match(Response, "\"mimmun\": (.*),").Groups[1].Value);
                             bool immuntree = bool.Parse(Regex.Match(Response, "\"simmun\": (.*),").Groups[1].Value);
