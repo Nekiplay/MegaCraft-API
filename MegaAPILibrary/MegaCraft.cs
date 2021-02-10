@@ -293,157 +293,160 @@ namespace MegaAPILibrary
 
                 public User(string Nickname, bool CheckLicense)
                 {
-                    try
+                    if (!string.IsNullOrEmpty(Nickname))
                     {
-                        using (WebClient wc = new WebClient())
+                        try
                         {
-                            wc.Encoding = Encoding.UTF8;
-
-                            string Response = wc.DownloadString("http://megacraft.org/api/v1/users/" + Nickname);
-                            this.Realname = Regex.Match(Response, "\"realname\": \"(.*)\",").Groups[1].Value;
-
-                            string staff = Regex.Match(Response, "\"staff\": \"(.*)\",").Groups[1].Value;
-                            if (staff != "")
+                            using (WebClient wc = new WebClient())
                             {
-                                this.Staff = staff;
-                            }
-                            string level = Regex.Match(Response, "\"level\": \"(.*)\",").Groups[1].Value;
-                            if (level != string.Empty)
-                                this.Level = int.Parse(level);
-                            else
-                            {
-                                level = Regex.Match(Response, "\"level\": (.*),").Groups[1].Value;
-                                this.Level = int.Parse(level);
-                            }
-                            this.Balance = int.Parse(Regex.Match(Response, "\"balance\": \"(.*)\",").Groups[1].Value);
-                            string mtime = Regex.Match(Response, "\"mtime\": \"(.*)\",").Groups[1].Value;
-                            if (mtime != "")
-                            {
-                                int days = MegaCraft.Utils.ConvertSectoDay(Convert.ToInt32(mtime));
-                                int hours = MegaCraft.Utils.ConvertSectoHour(Convert.ToInt32(mtime));
-                                int minutes = MegaCraft.Utils.ConvertSectoMinutes(Convert.ToInt32(mtime));
-                                int seconds = MegaCraft.Utils.ConvertSectoSeconds(Convert.ToInt32(mtime));
-                                this.Mtime = new _Mtime_(days, hours, minutes, seconds);
-                            }
+                                wc.Encoding = Encoding.UTF8;
 
-                            string lastlogin = Regex.Match(Response, "\"lastlogin\": \"(.*)\",").Groups[1].Value;
-                            // Unix timestamp is seconds past epoch
-                            TimeZoneInfo moscowZone = TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time");
-                            DateTime localtime = DateTime.Now;
-                            DateTime localmoscowTime = TimeZoneInfo.ConvertTime(localtime, moscowZone);
-                            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                            dtDateTime = dtDateTime.AddSeconds(int.Parse(lastlogin)).ToLocalTime();
-                            DateTime moscowTime = TimeZoneInfo.ConvertTime(dtDateTime, moscowZone);
-                            TimeSpan interval = localmoscowTime.AddSeconds(38) - moscowTime;
+                                string Response = wc.DownloadString("http://megacraft.org/api/v1/users/" + Nickname);
+                                this.Realname = Regex.Match(Response, "\"realname\": \"(.*)\",").Groups[1].Value;
 
-
-                            this.Lastlogin = new _Lastlogin_(interval.Days, interval.Hours, interval.Minutes, interval.Seconds);
-                            this.Lastserver = Regex.Match(Response, "\"lastserver\": \"(.*)\",").Groups[1].Value;
-
-                            this.Kills = int.Parse(Regex.Match(Response, "\"kills\": \"(.*)\",").Groups[1].Value);
-                            this.Deaths = int.Parse(Regex.Match(Response, "\"deaths\": \"(.*)\",").Groups[1].Value);
-
-                            this.Wins = int.Parse(Regex.Match(Response, "\"wins\": \"(.*)\",").Groups[1].Value);
-                            this.Losse = int.Parse(Regex.Match(Response, "\"losse\": \"(.*)\",").Groups[1].Value);
-
-                            this.Prefix = Regex.Match(Response, "\"prefix\": \"(.*)\",").Groups[1].Value.Replace(@"\/", "/");
-                            this.Donate = Regex.Match(Response, "\"groupprefix\": \"(.*)\",").Groups[1].Value;
-                            this.Multiplier = GetMultiDonate(Donate);
-                            bool immunone = bool.Parse(Regex.Match(Response, "\"immun\": (.*),").Groups[1].Value);
-                            bool immuntwo = bool.Parse(Regex.Match(Response, "\"mimmun\": (.*),").Groups[1].Value);
-                            bool immuntree = bool.Parse(Regex.Match(Response, "\"simmun\": (.*),").Groups[1].Value);
-
-                            this.Immune = new _Immune_(immunone, immuntwo, immuntree);
-
-                            string inclan = Regex.Match(Response, "\"clan\": (.*)").Groups[1].Value;
-                            if (inclan != "false")
-                            {
-                                this.Clan = new _Clan_();
-                                this.Clan.InTheClan = true;
-                                this.Clan.Name = Regex.Match(Response, "\"clan_name\": \"(.*)\",").Groups[1].Value;
-                                this.Clan.IsLeader = bool.Parse(Regex.Match(Response, "\"isLeader\": (.*),").Groups[1].Value);
-                                this.Clan.IsModer = bool.Parse(Regex.Match(Response, "\"isModer\": (.*),").Groups[1].Value);
-                                string score = Regex.Match(Response, "\"score\": \"(.*)\",").Groups[1].Value;
-                                if (score != "")
-                                    this.Clan.Score = int.Parse(score);
-                                else this.Clan.Score = 0;
-
-                                string members = Regex.Match(Response, "\"members\": \"(.*)\",").Groups[1].Value;
-                                if (members != "")
-                                    this.Clan.Members = int.Parse(members);
-                                else this.Clan.Members = 0;
-
-                                string maxmembers = Regex.Match(Response, "\"max_members\": \"(.*)\",").Groups[1].Value;
-                                if (maxmembers != "")
-                                    this.Clan.MaxMembers = int.Parse(maxmembers);
-                                else this.Clan.MaxMembers = 4;
-                            }
-                            else
-                            {
-                                this.Clan = new _Clan_
+                                string staff = Regex.Match(Response, "\"staff\": \"(.*)\",").Groups[1].Value;
+                                if (staff != "")
                                 {
-                                    InTheClan = false,
-                                }; 
-                                    
-                            }
-
-                            string bantype = Regex.Match(Response, "\"type\": \"(.*)\",").Groups[1].Value;
-                            if (bantype != string.Empty)
-                            {
-                                string banby = Regex.Match(Response, "\"bannedby\": \"(.*)\",").Groups[1].Value;
-                                string banreason = Regex.Match(Response, "\"reason\": \"(.*)\"").Groups[1].Value.Replace(@"\/", "/");
-
-                                this.Ban = new _Ban_ { Type = bantype, By = banby, Reason = banreason, Banned = true };
-
-                                string timeleft = Regex.Match(Response, "\"timeleft\": (.*)").Groups[1].Value;
-                                if (timeleft != string.Empty)
+                                    this.Staff = staff;
+                                }
+                                string level = Regex.Match(Response, "\"level\": \"(.*)\",").Groups[1].Value;
+                                if (level != string.Empty)
+                                    this.Level = int.Parse(level);
+                                else
                                 {
-                                    this.Ban.BanTime = new _Ban_._Mtime_(Utils.ConvertSectoDay(Convert.ToInt32(timeleft)), Utils.ConvertSectoHour(Convert.ToInt32(timeleft)), Utils.ConvertSectoMinutes(Convert.ToInt32(timeleft)), Utils.ConvertSectoSeconds(Convert.ToInt32(timeleft)));
+                                    level = Regex.Match(Response, "\"level\": (.*),").Groups[1].Value;
+                                    this.Level = int.Parse(level);
+                                }
+                                this.Balance = int.Parse(Regex.Match(Response, "\"balance\": \"(.*)\",").Groups[1].Value);
+                                string mtime = Regex.Match(Response, "\"mtime\": \"(.*)\",").Groups[1].Value;
+                                if (mtime != "")
+                                {
+                                    int days = MegaCraft.Utils.ConvertSectoDay(Convert.ToInt32(mtime));
+                                    int hours = MegaCraft.Utils.ConvertSectoHour(Convert.ToInt32(mtime));
+                                    int minutes = MegaCraft.Utils.ConvertSectoMinutes(Convert.ToInt32(mtime));
+                                    int seconds = MegaCraft.Utils.ConvertSectoSeconds(Convert.ToInt32(mtime));
+                                    this.Mtime = new _Mtime_(days, hours, minutes, seconds);
+                                }
+
+                                string lastlogin = Regex.Match(Response, "\"lastlogin\": \"(.*)\",").Groups[1].Value;
+                                // Unix timestamp is seconds past epoch
+                                TimeZoneInfo moscowZone = TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time");
+                                DateTime localtime = DateTime.Now;
+                                DateTime localmoscowTime = TimeZoneInfo.ConvertTime(localtime, moscowZone);
+                                System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                                dtDateTime = dtDateTime.AddSeconds(int.Parse(lastlogin)).ToLocalTime();
+                                DateTime moscowTime = TimeZoneInfo.ConvertTime(dtDateTime, moscowZone);
+                                TimeSpan interval = localmoscowTime.AddSeconds(38) - moscowTime;
+
+
+                                this.Lastlogin = new _Lastlogin_(interval.Days, interval.Hours, interval.Minutes, interval.Seconds);
+                                this.Lastserver = Regex.Match(Response, "\"lastserver\": \"(.*)\",").Groups[1].Value;
+
+                                this.Kills = int.Parse(Regex.Match(Response, "\"kills\": \"(.*)\",").Groups[1].Value);
+                                this.Deaths = int.Parse(Regex.Match(Response, "\"deaths\": \"(.*)\",").Groups[1].Value);
+
+                                this.Wins = int.Parse(Regex.Match(Response, "\"wins\": \"(.*)\",").Groups[1].Value);
+                                this.Losse = int.Parse(Regex.Match(Response, "\"losse\": \"(.*)\",").Groups[1].Value);
+
+                                this.Prefix = Regex.Match(Response, "\"prefix\": \"(.*)\",").Groups[1].Value.Replace(@"\/", "/");
+                                this.Donate = Regex.Match(Response, "\"groupprefix\": \"(.*)\",").Groups[1].Value;
+                                this.Multiplier = GetMultiDonate(Donate);
+                                bool immunone = bool.Parse(Regex.Match(Response, "\"immun\": (.*),").Groups[1].Value);
+                                bool immuntwo = bool.Parse(Regex.Match(Response, "\"mimmun\": (.*),").Groups[1].Value);
+                                bool immuntree = bool.Parse(Regex.Match(Response, "\"simmun\": (.*),").Groups[1].Value);
+
+                                this.Immune = new _Immune_(immunone, immuntwo, immuntree);
+
+                                string inclan = Regex.Match(Response, "\"clan\": (.*)").Groups[1].Value;
+                                if (inclan != "false")
+                                {
+                                    this.Clan = new _Clan_();
+                                    this.Clan.InTheClan = true;
+                                    this.Clan.Name = Regex.Match(Response, "\"clan_name\": \"(.*)\",").Groups[1].Value;
+                                    this.Clan.IsLeader = bool.Parse(Regex.Match(Response, "\"isLeader\": (.*),").Groups[1].Value);
+                                    this.Clan.IsModer = bool.Parse(Regex.Match(Response, "\"isModer\": (.*),").Groups[1].Value);
+                                    string score = Regex.Match(Response, "\"score\": \"(.*)\",").Groups[1].Value;
+                                    if (score != "")
+                                        this.Clan.Score = int.Parse(score);
+                                    else this.Clan.Score = 0;
+
+                                    string members = Regex.Match(Response, "\"members\": \"(.*)\",").Groups[1].Value;
+                                    if (members != "")
+                                        this.Clan.Members = int.Parse(members);
+                                    else this.Clan.Members = 0;
+
+                                    string maxmembers = Regex.Match(Response, "\"max_members\": \"(.*)\",").Groups[1].Value;
+                                    if (maxmembers != "")
+                                        this.Clan.MaxMembers = int.Parse(maxmembers);
+                                    else this.Clan.MaxMembers = 4;
                                 }
                                 else
                                 {
-                                    this.Ban.BanTime = new _Ban_._Mtime_(-1, -1, -1, -1);
-                                }
-                            }
-                            else
-                            {
-                                this.Ban = new _Ban_ { Banned = false };
-                            }
-
-                            this.License = new _License_
-                            {
-                                Lisence = false,
-                                UUID = "",
-                            };
-                        }
-                        if (CheckLicense)
-                        {
-                            using (WebClient wc2 = new WebClient())
-                            {
-                                string Response2 = wc2.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + Realname);
-                                string uuid = Regex.Match(Response2, "\"id\":\"(.*)\"}").Groups[1].Value;
-                                if (!string.IsNullOrEmpty(uuid))
-                                {
-                                    this.License = new _License_
+                                    this.Clan = new _Clan_
                                     {
-                                        Lisence = true,
-                                        UUID = uuid,
+                                        InTheClan = false,
                                     };
+
+                                }
+
+                                string bantype = Regex.Match(Response, "\"type\": \"(.*)\",").Groups[1].Value;
+                                if (bantype != string.Empty)
+                                {
+                                    string banby = Regex.Match(Response, "\"bannedby\": \"(.*)\",").Groups[1].Value;
+                                    string banreason = Regex.Match(Response, "\"reason\": \"(.*)\"").Groups[1].Value.Replace(@"\/", "/");
+
+                                    this.Ban = new _Ban_ { Type = bantype, By = banby, Reason = banreason, Banned = true };
+
+                                    string timeleft = Regex.Match(Response, "\"timeleft\": (.*)").Groups[1].Value;
+                                    if (timeleft != string.Empty)
+                                    {
+                                        this.Ban.BanTime = new _Ban_._Mtime_(Utils.ConvertSectoDay(Convert.ToInt32(timeleft)), Utils.ConvertSectoHour(Convert.ToInt32(timeleft)), Utils.ConvertSectoMinutes(Convert.ToInt32(timeleft)), Utils.ConvertSectoSeconds(Convert.ToInt32(timeleft)));
+                                    }
+                                    else
+                                    {
+                                        this.Ban.BanTime = new _Ban_._Mtime_(-1, -1, -1, -1);
+                                    }
                                 }
                                 else
                                 {
-                                    this.License = new _License_
+                                    this.Ban = new _Ban_ { Banned = false };
+                                }
+
+                                this.License = new _License_
+                                {
+                                    Lisence = false,
+                                    UUID = "",
+                                };
+                            }
+                            if (CheckLicense)
+                            {
+                                using (WebClient wc2 = new WebClient())
+                                {
+                                    string Response2 = wc2.DownloadString("https://api.mojang.com/users/profiles/minecraft/" + Realname);
+                                    string uuid = Regex.Match(Response2, "\"id\":\"(.*)\"}").Groups[1].Value;
+                                    if (!string.IsNullOrEmpty(uuid))
                                     {
-                                        Lisence = false,
-                                        UUID = uuid,
-                                    };
+                                        this.License = new _License_
+                                        {
+                                            Lisence = true,
+                                            UUID = uuid,
+                                        };
+                                    }
+                                    else
+                                    {
+                                        this.License = new _License_
+                                        {
+                                            Lisence = false,
+                                            UUID = uuid,
+                                        };
+                                    }
                                 }
                             }
                         }
-                    }
-                    catch
-                    {
+                        catch
+                        {
 
+                        }
                     }
                 }
 
