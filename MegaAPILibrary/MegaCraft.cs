@@ -291,7 +291,7 @@ namespace MegaAPILibrary
                             this.Wins = int.Parse(Regex.Match(Response, "\"wins\": \"(.*)\",").Groups[1].Value);
                             this.Losse = int.Parse(Regex.Match(Response, "\"losse\": \"(.*)\",").Groups[1].Value);
 
-                            this.Prefix = Regex.Match(Response, "\"prefix\": \"(.*)\",").Groups[1].Value;
+                            this.Prefix = Regex.Match(Response, "\"prefix\": \"(.*)\",").Groups[1].Value.Replace(@"\/", "/");
                             this.Donate = Regex.Match(Response, "\"groupprefix\": \"(.*)\",").Groups[1].Value;
 
                             bool immunone = bool.Parse(Regex.Match(Response, "\"immun\": (.*),").Groups[1].Value);
@@ -303,16 +303,25 @@ namespace MegaAPILibrary
                             string inclan = Regex.Match(Response, "\"clan\": (.*)").Groups[1].Value;
                             if (inclan != "false")
                             {
-                                this.Clan = new _Clan_
-                                {
-                                    InTheClan = true,
-                                    Name = Regex.Match(Response, "\"clan_name\": \"(.*)\",").Groups[1].Value,
-                                    IsLeader = bool.Parse(Regex.Match(Response, "\"isLeader\": (.*),").Groups[1].Value),
-                                    IsModer = bool.Parse(Regex.Match(Response, "\"isModer\": (.*),").Groups[1].Value),
-                                    Score = int.Parse(Regex.Match(Response, "\"score\": \"(.*)\",").Groups[1].Value),
-                                    Members = int.Parse(Regex.Match(Response, "\"members\": \"(.*)\",").Groups[1].Value),
-                                    MaxMembers = int.Parse(Regex.Match(Response, "\"max_members\": \"(.*)\"").Groups[1].Value),
-                                };
+                                this.Clan = new _Clan_();
+                                this.Clan.InTheClan = true;
+                                this.Clan.Name = Regex.Match(Response, "\"clan_name\": \"(.*)\",").Groups[1].Value;
+                                this.Clan.IsLeader = bool.Parse(Regex.Match(Response, "\"isLeader\": (.*),").Groups[1].Value);
+                                this.Clan.IsModer = bool.Parse(Regex.Match(Response, "\"isModer\": (.*),").Groups[1].Value);
+                                string score = Regex.Match(Response, "\"score\": \"(.*)\",").Groups[1].Value;
+                                if (score != "")
+                                    this.Clan.Score = int.Parse(score);
+                                else this.Clan.Score = 0;
+
+                                string members = Regex.Match(Response, "\"members\": \"(.*)\",").Groups[1].Value;
+                                if (members != "")
+                                    this.Clan.Members = int.Parse(members);
+                                else this.Clan.Members = 0;
+
+                                string maxmembers = Regex.Match(Response, "\"max_members\": \"(.*)\",").Groups[1].Value;
+                                if (maxmembers != "")
+                                    this.Clan.MaxMembers = int.Parse(maxmembers);
+                                else this.Clan.MaxMembers = 4;
                             }
                             else
                             {
@@ -327,7 +336,7 @@ namespace MegaAPILibrary
                             if (bantype != string.Empty)
                             {
                                 string banby = Regex.Match(Response, "\"bannedby\": \"(.*)\",").Groups[1].Value;
-                                string banreason = Regex.Match(Response, "\"reason\": \"(.*)\"").Groups[1].Value;
+                                string banreason = Regex.Match(Response, "\"reason\": \"(.*)\"").Groups[1].Value.Replace(@"\/", "/");
 
                                 this.Ban = new _Ban_ { Type = bantype, By = banby, Reason = banreason, Banned = true };
 

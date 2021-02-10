@@ -12,7 +12,7 @@ namespace Tests
         static void Main(string[] args)
         {
             Console.ReadLine();
-            MegaCraft.API.User user = new MegaCraft.API.User("Neki_play", CheckLicense: true);
+            MegaCraft.API.User user = new MegaCraft.API.User("Jadesen", CheckLicense: true);
             string done = "Последный выход с сервера: " + user.Lastlogin.Days + "д. " + user.Lastlogin.Hours + "ч. " + user.Lastlogin.Minutes + "м. " + user.Lastlogin.Seconds + "с. назад" + "\n";
             Console.WriteLine(done);
             Console.ReadLine();
