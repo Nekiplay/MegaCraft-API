@@ -378,7 +378,7 @@ namespace MegaAPILibrary
                                     string maxmembers = Regex.Match(Response, "\"max_members\": \"(.*)\",").Groups[1].Value;
                                     if (maxmembers != "")
                                         this.Clan.MaxMembers = int.Parse(maxmembers);
-                                    else this.Clan.MaxMembers = 4;
+                                    else this.Clan.MaxMembers = 20;
                                 }
                                 else
                                 {
