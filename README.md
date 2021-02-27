@@ -2,6 +2,9 @@
 
 [Nuget](https://www.nuget.org/packages/MegaAPILibrary)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/53e749024a1842deafccf7501775b27a)](https://www.codacy.com/gh/Nekiplay/MegaCraft-API/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Nekiplay/MegaCraft-API&amp;utm_campaign=Badge_Grade)
+
+
 ## API for minecraft server: mc.megacraft.org
 
 **Using user statistic:**
