@@ -491,7 +491,10 @@ namespace MegaAPILibrary
                         {
                             return true;
                         }
-                        else return false;
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
