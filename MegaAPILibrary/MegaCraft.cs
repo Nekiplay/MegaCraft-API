@@ -7,7 +7,7 @@ namespace MegaAPILibrary
 {
     public class MegaCraft
     {
-        public class Utils
+        public static class Utils
         {
             public static string RemoveColor(string text)
             {
@@ -28,58 +28,25 @@ namespace MegaAPILibrary
             public static int ConvertSectoDay(int n)
             {
                 int day = n / (24 * 3600);
-
-                n = n % (24 * 3600);
-                int hour = n / 3600;
-
-                n %= 3600;
-                int minutes = n / 60;
-
-                n %= 60;
-                int seconds = n;
-
                 return day;
             }
             public static int ConvertSectoHour(int n)
             {
-                int day = n / (24 * 3600);
-
                 n = n % (24 * 3600);
                 int hour = n / 3600;
-
-                n %= 3600;
-                int minutes = n / 60;
-
-                n %= 60;
-                int seconds = n;
-
                 return hour;
             }
             public static int ConvertSectoMinutes(int n)
             {
-                int day = n / (24 * 3600);
-
                 n = n % (24 * 3600);
-                int hour = n / 3600;
-
                 n %= 3600;
                 int minutes = n / 60;
-
-                n %= 60;
-                int seconds = n;
-
                 return minutes;
             }
             public static int ConvertSectoSeconds(int n)
             {
-                int day = n / (24 * 3600);
-
                 n = n % (24 * 3600);
-                int hour = n / 3600;
-
                 n %= 3600;
-                int minutes = n / 60;
-
                 n %= 60;
                 int seconds = n;
 
