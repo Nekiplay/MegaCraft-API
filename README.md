@@ -17,9 +17,13 @@ if (user.Valid)
     Console.WriteLine("UUID: " + user.License.UUID);
   }
   else
+  {
     Console.WriteLine("Ник игрока: " + user.Realname + " [Пиратка]");
+  }
   if (!string.IsNullOrEmpty(user.Staff))
+  {
     Console.WriteLine(user.Staff);
+  }
   Console.WriteLine("Уровень: " + user.Level);
   Console.WriteLine("Наиграл: " + user.Mtime.Days + "д. " + user.Mtime.Hours + "ч. " + user.Mtime.Minutes + "м. " + user.Mtime.Seconds + "с.");
   Console.WriteLine("");
