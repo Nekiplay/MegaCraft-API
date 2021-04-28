@@ -6,6 +6,50 @@
 
 ## API for minecraft server: mc.megacraft.org
 
+**Using /mtop wins:**
+```C#
+MegaAPILibrary.MegaCraft.API.Mtop.Wins mtopwins = new MegaCraft.API.Mtop.Wins();
+foreach (MegaAPILibrary.MegaCraft.API.Mtop.Wins.User user in mtopwins.users)
+{
+  Console.WriteLine("Ник: " + user.name);
+  Console.WriteLine("Побед: " + MegaAPILibrary.MegaCraft.Utils.IntFormat(user.wins));
+  Console.WriteLine("");
+}
+```
+
+**Using /mtop kills:**
+```C#
+MegaAPILibrary.MegaCraft.API.Mtop.Kills mtopkills = new MegaCraft.API.Mtop.Kills();
+foreach (MegaAPILibrary.MegaCraft.API.Mtop.Kills.User user in mtopkills.users)
+{
+  Console.WriteLine("Ник: " + user.name);
+  Console.WriteLine("Убийств: " + MegaAPILibrary.MegaCraft.Utils.IntFormat(user.kills));
+  Console.WriteLine("");
+}
+```
+
+**Using /mtop losses:**
+```C#
+MegaAPILibrary.MegaCraft.API.Mtop.Losses mtoplosses = new MegaCraft.API.Mtop.Losses();
+foreach (MegaAPILibrary.MegaCraft.API.Mtop.Losses.User user in mtoplosses.users)
+{
+  Console.WriteLine("Ник: " + user.name);
+  Console.WriteLine("Проигрышей: " + MegaAPILibrary.MegaCraft.Utils.IntFormat(user.losses));
+  Console.WriteLine("");
+}
+```
+
+**Using /mtop deaths:**
+```C#
+MegaAPILibrary.MegaCraft.API.Mtop.Deaths mtopdeaths = new MegaCraft.API.Mtop.Deaths();
+foreach (MegaAPILibrary.MegaCraft.API.Mtop.Deaths.User user in mtopdeaths.users)
+{
+  Console.WriteLine("Ник: " + user.name);
+  Console.WriteLine("Смертей: " + MegaAPILibrary.MegaCraft.Utils.IntFormat(user.deaths));
+  Console.WriteLine("");
+}
+```
+
 **Using /mtop megacoin:**
 ```C#
 MegaAPILibrary.MegaCraft.API.Mtop.MegaCoins mtopmegacoins = new MegaCraft.API.Mtop.MegaCoins();
