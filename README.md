@@ -6,7 +6,32 @@
 
 ## API for minecraft server: mc.megacraft.org
 
+**Using /mtop megacoin:**
+```C#
+MegaAPILibrary.MegaCraft.API.Mtop.MegaCoins mtopmegacoins = new MegaCraft.API.Mtop.MegaCoins();
+foreach (MegaAPILibrary.MegaCraft.API.Mtop.MegaCoins.User user in mtopmegacoins.users)
+{
+  Console.WriteLine("Ник: " + user.name);
+  Console.WriteLine("Баланс: " + MegaAPILibrary.MegaCraft.Utils.IntFormat(user.balance));
+  Console.WriteLine("");
+}
+```
+
+**Using /mtop clans:**
+
+```C#
+MegaAPILibrary.MegaCraft.API.Mtop.Clans mtopclans = new MegaCraft.API.Mtop.Clans();
+foreach (MegaAPILibrary.MegaCraft.API.Mtop.Clans.Clan clan in mtopclans.clans)
+{
+  Console.WriteLine("Название клана: " + MegaAPILibrary.MegaCraft.Utils.RemoveColor(clan.name));
+  Console.WriteLine("Ранг клана: " + clan.rank);
+  Console.WriteLine("Владелец клана: " + clan.leader);
+  Console.WriteLine("");
+}
+```
+
 **Using user statistic:**
+
 ```C#
 MegaAPILibrary.MegaCraft.API.User user = new MegaAPILibrary.MegaCraft.API.User("Neki_play1", true);
 if (user.Valid)
