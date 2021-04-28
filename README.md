@@ -8,57 +8,58 @@
 
 **Using user statistic:**
 ```C#
-MegaCraft.API.User user = new MegaCraft.API.User(Nickname: "Neki_play1", CheckLicense: true);
+MegaAPILibrary.MegaCraft.API.User user = new MegaAPILibrary.MegaCraft.API.User("Neki_play1", true);
 if (user.Valid)
 {
-  if (user.License.Lisence)
+  if (user.license.Lisence)
   {
-    Console.WriteLine("Ник игрока: " + user.Realname + " [Лицензия]");
-    Console.WriteLine("UUID: " + user.License.UUID);
+    Console.WriteLine("Ник игрока: " + user.realname + " [Лицензия]");
+    Console.WriteLine("UUID: " + user.license.UUID);
   }
   else
   {
-    Console.WriteLine("Ник игрока: " + user.Realname + " [Пиратка]");
+    Console.WriteLine("Ник игрока: " + user.realname + " [Пиратка]");
   }
-  if (!string.IsNullOrEmpty(user.Staff))
+  if (!string.IsNullOrEmpty(user.staff))
   {
-    Console.WriteLine(user.Staff);
+    Console.WriteLine(user.staff);
   }
-  Console.WriteLine("Уровень: " + user.Level);
-  Console.WriteLine("Наиграл: " + user.Mtime.Days + "д. " + user.Mtime.Hours + "ч. " + user.Mtime.Minutes + "м. " + user.Mtime.Seconds + "с.");
   Console.WriteLine("");
-  Console.WriteLine("Последный выход с сервера: " + user.Lastlogin.Days + "д. " + user.Lastlogin.Hours + "ч. " + user.Lastlogin.Minutes + "м. " + user.Lastlogin.Seconds + "с. назад");
-  Console.WriteLine("Последний сервер: " + user.Lastserver);
+  Console.WriteLine("Уровень: " + user.level);
+  Console.WriteLine("Наиграл: " + user.mtime.Days + "д. " + user.mtime.Hours + "ч. " + user.mtime.Minutes + "м. " + user.mtime.Seconds + "с.");
   Console.WriteLine("");
-  Console.WriteLine("МегаКойнов: " + MegaCraft.Utils.IntFormat(user.Balance));
+  Console.WriteLine("Последный выход с сервера: " + user.lastlogin.Days + "д. " + user.lastlogin.Hours + "ч. " + user.lastlogin.Minutes + "м. " + user.lastlogin.Seconds + "с. назад");
+  Console.WriteLine("Последний сервер: " + user.lastserver);
   Console.WriteLine("");
-  Console.WriteLine("Убийств: " + MegaCraft.Utils.IntFormat(user.Kills));
-  Console.WriteLine("Смертей: " + MegaCraft.Utils.IntFormat(user.Deaths));
+  Console.WriteLine("МегаКойнов: " + MegaCraft.Utils.IntFormat(user.balance));
   Console.WriteLine("");
-  Console.WriteLine("Побед: " + MegaCraft.Utils.IntFormat(user.Wins));
-  Console.WriteLine("Поражений: " + MegaCraft.Utils.IntFormat(user.Losse));
+  Console.WriteLine("Убийств: " + MegaCraft.Utils.IntFormat(user.kills));
+  Console.WriteLine("Смертей: " + MegaCraft.Utils.IntFormat(user.deaths));
   Console.WriteLine("");
-  Console.WriteLine("Донат: " + user.Donate);
-  Console.WriteLine("Префикс: " + user.Prefix);
-  if (user.Clan.InTheClan)
+  Console.WriteLine("Побед: " + MegaCraft.Utils.IntFormat(user.wins));
+  Console.WriteLine("Поражений: " + MegaCraft.Utils.IntFormat(user.losse));
+  Console.WriteLine("");
+  Console.WriteLine("Донат: " + MegaAPILibrary.MegaCraft.Utils.RemoveColor(user.donate));
+  Console.WriteLine("Префикс: " + MegaAPILibrary.MegaCraft.Utils.RemoveColor(user.prefix));
+  if (user.clan.InTheClan)
   {
     Console.WriteLine("");
-    Console.WriteLine("Клан: " + user.Clan.Name);
-    Console.WriteLine("Участников: " + user.Clan.Members + "/" + user.Clan.MaxMembers);
-    Console.WriteLine("Счет: " + user.Clan.Score);   
+    Console.WriteLine("Клан: " + MegaAPILibrary.MegaCraft.Utils.RemoveColor(user.clan.Name));
+    Console.WriteLine("Участников: " + user.clan.Members + "/" + user.clan.MaxMembers);
+    Console.WriteLine("Счет: " + user.clan.Score);
   }
   Console.WriteLine("");
-  Console.WriteLine("Имунитеты: " + user.Immune.Standart + ", " + user.Immune.MImmune + ", " + user.Immune.SImmune);
-  if (user.Ban.Banned)
+  Console.WriteLine("Имунитеты: " + user.immune.Standart + ", " + user.immune.MImmune + ", " + user.immune.SImmune);
+  if (user.ban.Banned)
   {
     Console.WriteLine("");
     Console.WriteLine("Забанен");
-    Console.WriteLine("Причина бана: " + user.Ban.Reason);
-    Console.WriteLine("Забанил: " + user.Ban.By);
-    Console.WriteLine("Тип бана: " + user.Ban.Type);
-    if (user.Ban.BanTime.Days != -1 && user.Ban.BanTime.Hours != -1 & user.Ban.BanTime.Minutes != -1 && user.Ban.BanTime.Seconds != -1)
+    Console.WriteLine("Причина бана: " + user.ban.Reason);
+    Console.WriteLine("Забанил: " + user.ban.By);
+    Console.WriteLine("Тип бана: " + user.ban.Type);
+    if (user.ban.BanTime.Days != -1 && user.ban.BanTime.Hours != -1 & user.ban.BanTime.Minutes != -1 && user.ban.BanTime.Seconds != -1)
     {
-      Console.WriteLine("До разбана: " + user.Ban.BanTime.Days + "д. " + user.Ban.BanTime.Hours + "ч. " + user.Ban.BanTime.Minutes + "м. " + user.Ban.BanTime.Seconds + "с.");
+      Console.WriteLine("До разбана: " + user.ban.BanTime.Days + "д. " + user.ban.BanTime.Hours + "ч. " + user.ban.BanTime.Minutes + "м. " + user.ban.BanTime.Seconds + "с.");
     }
   }
 }
@@ -66,4 +67,5 @@ else
 {
   Console.WriteLine("Пользователь не найден");
 }
+Console.ReadLine();
 ```
